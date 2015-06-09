@@ -31,7 +31,17 @@ function wkhtmltopdf(input, options, callback) {
     return true;
   }).concat(extraKeys);
   
-  var args = [wkhtmltopdf.command, '--quiet'];
+  //var args = [wkhtmltopdf.command, '--quiet'];
+  var args;
+  if (process.platform === 'win32') {
+    args = [wkhtmltopdf.command, '--quiet'];
+  } else {
+    if (options.usexvfb) {
+      args = ['xvfb-run -a', "-s '-screen 0 " + options.xvfbSize + "'",  wkhtmltopdf.command, '--quiet'];
+    } else {
+      args = [wkhtmltopdf.command, '--quiet'];
+    }
+  }
   keys.forEach(function(key) {
     var val = options[key];
     if (key !== 'toc' && key !== 'cover' && key !== 'page')
