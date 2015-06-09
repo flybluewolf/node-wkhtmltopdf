@@ -22,11 +22,8 @@ function wkhtmltopdf(input, options, callback) {
   
   var usexvfb = options.usexvfb;
   var xvfbSize = options.xvfbSize;
-  
-  if (process.platform === 'win32' || process.platform === 'darwin') {
-    delete options.xvfbSize;
-    delete options.usexvfb;
-  }
+  delete options.xvfbSize;
+  delete options.usexvfb;
 
   // make sure the special keys are last
   var extraKeys = [];
