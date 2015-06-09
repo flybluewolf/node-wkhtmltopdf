@@ -20,6 +20,9 @@ function wkhtmltopdf(input, options, callback) {
   var output = options.output;
   delete options.output;
   
+  var usexvfb = options.usexvfb;
+  var xvfbSize = options.xvfbSize;
+  
   if (process.platform === 'win32' || process.platform === 'darwin') {
     delete options.xvfbSize;
     delete options.usexvfb;
@@ -43,8 +46,8 @@ function wkhtmltopdf(input, options, callback) {
   } else if(process.platform === 'darwin') {
     args = [wkhtmltopdf.command, '--quiet'];  
   } else {
-    if (options.usexvfb) {
-      args = ['xvfb-run -a', "-s '-screen 0 " + options.xvfbSize + "'",  wkhtmltopdf.command, '--quiet'];
+    if (usexvfb) {
+      args = ['xvfb-run -a', "-s '-screen 0 " + xvfbSize + "'",  wkhtmltopdf.command, '--use-xserver', '--quiet'];
     } else {
       args = [wkhtmltopdf.command, '--quiet'];
     }
