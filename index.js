@@ -35,6 +35,8 @@ function wkhtmltopdf(input, options, callback) {
   var args;
   if (process.platform === 'win32') {
     args = [wkhtmltopdf.command, '--quiet'];
+  } else if(process.platform === 'darwin') {
+    args = [wkhtmltopdf.command, '--quiet'];  
   } else {
     if (options.usexvfb) {
       args = ['xvfb-run -a', "-s '-screen 0 " + options.xvfbSize + "'",  wkhtmltopdf.command, '--quiet'];
